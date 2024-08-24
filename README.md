@@ -7,6 +7,7 @@ The web application for conducting surveys and polls executively for authorized 
 * [Requirements](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Requirements)
 * [Vision and Scope](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Vision-and-Scope)
 * [Project Plan](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Project-Plan)
+* [Installation](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Installation)
 
 ## Current Progress
 The program now is in Iteration 1. [Iteration 1](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Iteration_1)
