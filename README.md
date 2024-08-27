@@ -1,16 +1,18 @@
 # KU-Polls
 ## Description
-The web application for conducting surveys and polls executively for authorized people in Kasetsart University.
+The web application for conducting surveys and polls executively for authorized people in Kasetsart University. This project has some parts of [Django tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
 
 ## Documents
-* [Project Wiki](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Home)
-* [Requirements](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Requirements)
-* [Vision and Scope](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Vision-and-Scope)
-* [Project Plan](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Project-Plan)
-* [Installation](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Installation)
+* [Project Wiki](../../wiki/Home)
+* [Requirements](../../wiki/Requirements)
+* [Vision and Scope](../../wiki/Vision-and-Scope)
+* [Project Plan](../../wiki/Project-Plan)
+* [Installation](../../wiki/Installation)
 
 ## Current Progress
-The program now is in Iteration 1. [Iteration 1](https://github.com/Thanawas-Sirilertsathit/ku-polls/wiki/Iteration_1)
+* [Iteration 1](../../wiki/Iteration_1)
+* [Iteration 1 Domain Model](../../wiki/Iteration_1_Domain_Model)
+* [Iteration 2](../../wiki/Iteration_2)
 
 ## Requirements and Installation
 Run these command respectively
@@ -26,4 +28,6 @@ Run these command respectively
 5. Install required modules
 * pip install -r requirements.txt
 6. Run the server
+* python manage.py migrate
+* python manage.py loaddata data/polls-v1.json
 * python manage.py runserver
