@@ -10,8 +10,8 @@ The web application for conducting surveys and polls executively for authorized 
 * [Installation](../../wiki/Installation)
 
 ## Current Progress
+* [Domain Model](../../wiki/Domain_Model)
 * [Iteration 1](../../wiki/Iteration_1)
-* [Iteration 1 Domain Model](../../wiki/Iteration_1_Domain_Model)
 * [Iteration 2](../../wiki/Iteration_2)
 
 ## Requirements and Installation
