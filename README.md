@@ -1,4 +1,4 @@
-# KU-Polls
+# KU-Polls : Online survey web application
 ## Description
 The web application for conducting surveys and polls executively for authorized people in Kasetsart University. This project has some parts of [Django tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
 
