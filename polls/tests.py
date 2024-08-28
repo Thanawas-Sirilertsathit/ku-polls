@@ -1,8 +1,10 @@
+from datetime import timedelta
 import datetime
 
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.messages import get_messages
 from .models import Question
 
 
@@ -86,13 +88,70 @@ class QuestionDetailViewTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
-    def test_past_question(self):
+    def test_redirect_if_voting_not_allowed(self):
         """
-        The detail view of a question with a pub_date in the past
-        displays the question's text.
+        If voting is not allowed, redirect to the polls index and show an error message.
         """
-        past_question = create_question(
-            question_text="Past Question.", days=-5)
-        url = reverse("polls:detail", args=(past_question.id,))
+        question = Question.objects.create(
+            question_text="Past Question.",
+            pub_date=timezone.now() - timedelta(days=5),
+            end_date=timezone.now() - timedelta(days=1)  # Voting period has ended
+        )
+        url = reverse("polls:detail", args=(question.id,))
         response = self.client.get(url)
-        self.assertContains(response, past_question.question_text)
+
+        # Check if redirected to the index page
+        self.assertRedirects(response, reverse("polls:index"))
+
+        # Check if the error message is set
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(
+            any("Voting is not allowed for this poll." in str(m) for m in messages))
+
+
+class QuestionModelTests(TestCase):
+
+    def test_is_published_with_future_pub_date(self):
+        """
+        is_published() returns False for questions whose pub_date is in the future.
+        """
+        future_question = Question(
+            pub_date=timezone.now() + timedelta(days=30))
+        self.assertFalse(future_question.is_published())
+
+    def test_is_published_with_past_pub_date(self):
+        """
+        is_published() returns True for questions whose pub_date is in the past.
+        """
+        past_question = Question(pub_date=timezone.now() - timedelta(days=30))
+        self.assertTrue(past_question.is_published())
+
+    def test_is_published_with_default_pub_date(self):
+        """
+        is_published() returns True for questions with a pub_date of now.
+        """
+        now_question = Question(pub_date=timezone.now())
+        self.assertTrue(now_question.is_published())
+
+    def test_can_vote_before_pub_date(self):
+        """
+        can_vote() returns False for questions whose pub_date is in the future.
+        """
+        future_question = Question(pub_date=timezone.now() + timedelta(days=1))
+        self.assertFalse(future_question.can_vote())
+
+    def test_can_vote_after_end_date(self):
+        """
+        can_vote() returns False if the end_date is in the past.
+        """
+        past_question = Question(pub_date=timezone.now() - timedelta(days=10),
+                                 end_date=timezone.now() - timedelta(days=1))
+        self.assertFalse(past_question.can_vote())
+
+    def test_can_vote_within_voting_period(self):
+        """
+        can_vote() returns True if current date is between pub_date and end_date.
+        """
+        question = Question(pub_date=timezone.now() - timedelta(days=1),
+                            end_date=timezone.now() + timedelta(days=1))
+        self.assertTrue(question.can_vote())
