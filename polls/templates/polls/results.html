@@ -1,9 +1,47 @@
-<h1>{{ question.question_text }}</h1>
-
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Poll Results</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #fd4;
+            padding: 8px;
+            text-align: left; /* Aligns text to the left */
+        }
+        th {
+            background-color: #f2f;
+        }
+        .results-table {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ question.question_text }}</h1>
+    <table class="results-table">
+        <thead>
+            <tr>
+                <th>Choice</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for choice in question.choice_set.all %}
+                <tr>
+                    <td>{{ choice.choice_text }}</td>
+                    <td>{{ choice.votes }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2">No choices available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'polls:index' %}">Back to List of Polls</a>
+</body>
+</html>

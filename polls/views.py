@@ -19,7 +19,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = "polls/detail.html"
+    template_name = "polls/question_detail.html"
 
     def get_queryset(self):
         """Excludes any questions that aren't published yet."""
