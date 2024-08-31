@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-
+from django.contrib import messages
 from .models import Choice, Question
 
 
@@ -18,10 +18,19 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
+    model = Question
+    template_name = "polls/question_detail.html"
+
     def get_queryset(self):
-        model = Question
-        template_name = "polls/question_detail.html"
+        """Excludes any questions that aren't published yet."""
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def dispatch(self, request, *args, **kwargs):
+        question = self.get_object()
+        if not question.can_vote():
+            messages.error(request, "Voting is not allowed for this poll.")
+            return HttpResponseRedirect(reverse('polls:index'))
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ResultsView(generic.DetailView):
