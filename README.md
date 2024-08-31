@@ -15,19 +15,41 @@ The web application for conducting surveys and polls executively for authorized 
 * [Iteration 2](../../wiki/Iteration_2)
 
 ## Requirements and Installation
-Run these command respectively
+## Run these commands respectively
 1. Clone github repository
-* git clone https://github.com/Thanawas-Sirilertsathit/ku-polls.git
+```
+git clone https://github.com/Thanawas-Sirilertsathit/ku-polls.git
+```
 2. Change directory to ku-polls
-* cd ku-polls
+```
+cd ku-polls
+```
 3. Create Virtual Environment
-* python -m venv env
+```
+python -m venv env
+```
 4. Activate Virtual Environment
-* env\Scripts\activate (For window)
-* source env/bin/activate (For mac and linux)
+```
+env\Scripts\activate # For Window
+```
+```
+source env/bin/activate # For MacOS and Linux
+```
 5. Install required modules
-* pip install -r requirements.txt
-6. Run the server
-* python manage.py migrate
-* python manage.py loaddata data/polls-v1.json
-* python manage.py runserver
+```
+pip install -r requirements.txt
+```
+6. Apply config
+
+Create a file called ``.env.production`` then copy format of ``sample.env`` and put information into ``.env.production``
+
+7. Run the server
+```
+python manage.py migrate
+```
+```
+python manage.py loaddata data/polls-v2.json
+```
+```
+python manage.py runserver
+```
