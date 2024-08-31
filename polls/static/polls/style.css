@@ -1,6 +1,66 @@
-li a {
-    color: rgb(255, 0, 234);
-}
+/* polls/static/polls/style.css */
+
 body {
-    background: rgb(121, 15, 80);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: green;
+}
+
+header {
+    background-color: rgb(37, 56, 8);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header nav a {
+    color: limegreen;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: yellowgreen;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: white;
+}
+
+.poll-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.poll-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #707070;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.poll-list a {
+    color: yellow;
+    text-decoration: none;
+}
+
+.poll-list a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }

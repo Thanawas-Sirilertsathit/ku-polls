@@ -1,14 +1,36 @@
-<!-- polls/detail.html -->
-<h1>{{ question.question_text }}</h1>
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-    {% empty %}
-        <p>No choices available.</p>
-    {% endfor %}
-    <button type="submit">Vote</button>
-</form>
-<a href="{% url 'polls:index' %}">Back to List of Polls</a>
-<a href="{% url 'polls:results' question.id %}">Results</a>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ question.question_text }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ question.question_text }}</h1>
+    </header>
+
+    <main>
+        <form action="{% url 'polls:vote' question.id %}" method="post" class="poll-form">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Select your choice:</legend>
+                {% for choice in question.choice_set.all %}
+                    <div class="choice-option">
+                        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                    </div>
+                {% empty %}
+                    <p>No choices available.</p>
+                {% endfor %}
+            </fieldset>
+            <button type="submit" class="vote-button">Vote</button>
+        </form>
+
+        <div class="navigation-links">
+            <a href="{% url 'polls:index' %}">Back to List of Polls</a>
+            <a href="{% url 'polls:results' question.id %}">Results</a>
+        </div>
+    </main>
+</body>
