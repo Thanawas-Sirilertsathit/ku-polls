@@ -16,8 +16,12 @@
             <ul class="poll-list">
             {% for question in latest_question_list %}
                 <li>
+                    {% if question.can_vote %}
                     <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-                    - <a href="{% url 'polls:results' question.id %}">Results</a>
+                {% else %}
+                <a href="{% url 'polls:results' question.id %}" style="color: red;" class="closed-poll">{{ question.question_text }} (Closed)</a>
+                {% endif %}
+                - <a href="{% url 'polls:results' question.id %}">Results</a>
                 </li>
             {% endfor %}
             </ul>
