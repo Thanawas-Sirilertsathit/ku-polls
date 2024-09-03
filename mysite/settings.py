@@ -100,6 +100,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    # username & password authentication
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_REDIRECT_URL = 'polls:index'  # after login, show list of polls
+LOGOUT_REDIRECT_URL = 'login'  # after logout, return to login page
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -111,7 +118,6 @@ TIME_ZONE = config('TIME_ZONE', default='UTC')
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
