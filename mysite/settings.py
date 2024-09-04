@@ -106,7 +106,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_REDIRECT_URL = 'polls:index'  # after login, show list of polls
-LOGOUT_REDIRECT_URL = 'login'  # after logout, return to login page
+LOGOUT_REDIRECT_URL = 'polls:index'  # after logout, return to login page
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
