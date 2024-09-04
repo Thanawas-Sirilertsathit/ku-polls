@@ -13,6 +13,7 @@ The web application for conducting surveys and polls executively for authorized 
 * [Domain Model](../../wiki/Domain_Model)
 * [Iteration 1](../../wiki/Iteration_1)
 * [Iteration 2](../../wiki/Iteration_2)
+* [Iteration 3](../../wiki/Iteration_3)
 
 ## Requirements and Installation
 ## Run these commands respectively
@@ -48,7 +49,10 @@ Create a file called ``.env.production`` then copy format of ``sample.env`` and 
 python manage.py migrate
 ```
 ```
-python manage.py loaddata data/polls-v2.json
+python manage.py loaddata data/polls-v3.json
+```
+```
+python manage.py loaddata data/users.json
 ```
 ```
 python manage.py runserver
