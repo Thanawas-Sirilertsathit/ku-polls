@@ -40,7 +40,6 @@ class Choice(models.Model):
     """A choice from a specific question in the poll."""
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    # votes = models.IntegerField(default=0)
 
     def __str__(self):
         """Return choice text"""
@@ -58,5 +57,4 @@ class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
-        # Ensure that a user can only vote once per question
         unique_together = ('user', 'choice')

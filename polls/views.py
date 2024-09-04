@@ -14,6 +14,7 @@ logger = logging.getLogger("polls")
 
 
 class IndexView(generic.ListView):
+    """Index page"""
     template_name = "polls/index.html"
     context_object_name = "latest_question_list"
 
@@ -54,6 +55,7 @@ class DetailView(generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
+    """Render result page"""
     model = Question
     template_name = "polls/results.html"
 
@@ -74,6 +76,7 @@ class ResultsView(generic.DetailView):
 
 @login_required
 def vote(request, question_id):
+    """Function for attempt voting that will create or change attribute choice if success then redirect"""
     question = get_object_or_404(Question, pk=question_id)
     ip = get_client_ip(request)
     try:
