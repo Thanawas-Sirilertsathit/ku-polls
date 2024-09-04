@@ -10,6 +10,34 @@
             background-color: #f0ff0f; 
             font-weight: bold;
         }
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            max-width: 600px;
+            text-align: center;
+            color: #fff;
+            display: inline-block; /* Ensure the container's width is only as wide as its content */
+        }
+        .message.success {
+            background-color: #124429;
+            color: #3cf;
+        }
+        .message.error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .message.warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+        }
+        .message.info {
+            background-color: #d9edf7;
+            color: #31708f;
+        }
+        .messages-container {
+            text-align: center; /* Center the messages container */
+        }
     </style>
 {% endblock %}
 
@@ -71,6 +99,17 @@
             font-size: 16px;
             display: inline-block;
         ">Results</a>
+    </div>
+    <div class="messages-container">
+        <div class="messages">
+            <ul style="list-style-type: none; padding: 0; margin: 0;">
+                {% if messages %}
+                    {% for message in messages %}
+                        <li class="message {{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </main>
 {% endblock %}
