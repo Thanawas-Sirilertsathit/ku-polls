@@ -1,106 +1,76 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ question.question_text }}</title>
-    {% load static %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ question.question_text }}{% endblock %}
+
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-</head>
-<body>
-    <header>
-        <h1>{{ question.question_text }}</h1>
-    </header>
+    <style>
+        .user-vote {
+            background-color: #f0ff0f; 
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
 
-    <main>
-        <form action="{% url 'polls:vote' question.id %}" method="post" class="poll-form">
-            {% csrf_token %}
-            <fieldset>
-                <legend>Select your choice:</legend>
-                {% for choice in question.choice_set.all %}
-                    <div class="choice-option">
-                        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
-                    </div>
-                {% empty %}
-                    <p>No choices available.</p>
-                {% endfor %}
-            </fieldset>
-            <button type="submit" style="
-                background-color: #0066cc; 
-                color: white; 
-                padding: 10px 20px; 
-                border: none; 
-                border-radius: 4px; 
-                cursor: pointer; 
-                font-size: 16px;
-                display: inline-block;
-                margin: 10px 0;
-            ">Vote</button>
-        </form>
+{% block content %}
+<header>
+    <h1>{{ question.question_text }}</h1>
+</header>
 
-        <div class="navigation-links" style="margin-top: 20px; text-align: center;">
-            <a href="{% url 'polls:index' %}" style="
-                background-color: #0066cc; 
-                color: white; 
-                text-decoration: none; 
-                padding: 10px 20px; 
-                border-radius: 4px; 
-                margin: 0 5px; 
-                font-size: 16px;
-                display: inline-block;
-            ">Back to List of Polls</a>
-            <a href="{% url 'polls:results' question.id %}" style="
-                background-color: #0066cc; 
-                color: white; 
-                text-decoration: none; 
-                padding: 10px 20px; 
-                border-radius: 4px; 
-                margin: 0 5px; 
-                font-size: 16px;
-                display: inline-block;
-            ">Results</a>
-        </div>
-    </main>
-</body>
-<footer style="text-align: center; padding: 20px; background-color: #333; color: white;">
-    <div style="display: flex; align-items: center; justify-content: center;">
-        {% if user.is_authenticated %}
-            <span style="margin-right: 20px;">Current user: {{ user.username }}</span>
-            <form action="{% url 'logout' %}" method="post" style="margin: 0;">
-                {% csrf_token %}
-                <button type="submit" style="
-                    background-color: #0066cc; 
-                    color: white; 
-                    padding: 10px 20px; 
-                    border: none; 
-                    border-radius: 4px; 
-                    cursor: pointer; 
-                    font-size: 16px;
-                ">Log Out</button>
-            </form>
-        {% else %}
-            <a href="{% url 'signup' %}" style="
-                background-color: #0066cc; 
-                color: white; 
-                text-decoration: none; 
-                padding: 10px 20px; 
-                border-radius: 4px; 
-                margin: 0 5px; 
-                font-size: 16px;
-                display: inline-block;
-            ">Sign Up</a>
-            <a href="{% url 'login' %}?next={{ request.path }}" style="
-                background-color: #0066cc; 
-                color: white; 
-                text-decoration: none; 
-                padding: 10px 20px; 
-                border-radius: 4px; 
-                margin: 0 5px; 
-                font-size: 16px;
-                display: inline-block;
-            ">Login</a>
-        {% endif %}
+<main>
+    {% if user_vote %}
+        <p>Your previous vote: <strong>{{ user_vote.choice.choice_text }}</strong></p>
+    {% endif %}
+    
+    <form action="{% url 'polls:vote' question.id %}" method="post" class="poll-form">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Select your choice:</legend>
+            {% for choice in question.choice_set.all %}
+                <div class="choice-option {% if user_vote and choice == user_vote.choice %}user-vote{% endif %}">
+                    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" 
+                           {% if user_vote and choice == user_vote.choice %}checked{% endif %}>
+                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                </div>
+            {% empty %}
+                <p>No choices available.</p>
+            {% endfor %}
+        </fieldset>
+        <button type="submit" style="
+            background-color: #0066cc; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px;
+            display: inline-block;
+            margin: 10px 0;
+        ">Vote</button>
+    </form>
+
+    <div class="navigation-links" style="margin-top: 20px; text-align: center;">
+        <a href="{% url 'polls:index' %}" style="
+            background-color: #0066cc; 
+            color: white; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            margin: 0 5px; 
+            font-size: 16px;
+            display: inline-block;
+        ">Back to List of Polls</a>
+        <a href="{% url 'polls:results' question.id %}" style="
+            background-color: #0066cc; 
+            color: white; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            margin: 0 5px; 
+            font-size: 16px;
+            display: inline-block;
+        ">Results</a>
     </div>
-</footer>
-</html>
+</main>
+{% endblock %}

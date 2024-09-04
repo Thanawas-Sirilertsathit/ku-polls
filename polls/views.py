@@ -34,10 +34,38 @@ class DetailView(generic.DetailView):
             return HttpResponseRedirect(reverse('polls:index'))
         return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        """Get user data"""
+        context = super().get_context_data(**kwargs)
+        user_vote = None
+        if self.request.user.is_authenticated:
+            try:
+                user_vote = Vote.objects.get(
+                    user=self.request.user, choice__question=self.get_object())
+            except Vote.DoesNotExist:
+                user_vote = None
+
+        context['user_vote'] = user_vote
+        return context
+
 
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+    def get_context_data(self, **kwargs):
+        """Get user data"""
+        context = super().get_context_data(**kwargs)
+        user_vote = None
+        if self.request.user.is_authenticated:
+            try:
+                user_vote = Vote.objects.get(
+                    user=self.request.user, choice__question=self.get_object())
+            except Vote.DoesNotExist:
+                user_vote = None
+
+        context['user_vote'] = user_vote
+        return context
 
 
 @login_required

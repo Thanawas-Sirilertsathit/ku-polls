@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Polls{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    {% block extra_css %}
+    <!-- Additional CSS can be added here -->
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <!-- Main content goes here -->
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 5px; background-color: #333; color: white;">
+        <div style="display: flex; align-items: center; justify-content: center;">
+            {% if user.is_authenticated %}
+                <span style="margin-right: 20px;">Current user: {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                        background-color: #0066cc; 
+                        color: white; 
+                        padding: 10px 20px; 
+                        border: none; 
+                        border-radius: 4px; 
+                        cursor: pointer; 
+                        font-size: 16px;
+                    ">Log Out</button>
+                </form>
+            {% else %}
+                <a href="{% url 'signup' %}" style="
+                    background-color: #0066cc; 
+                    color: white; 
+                    text-decoration: none; 
+                    padding: 10px 20px; 
+                    border-radius: 4px; 
+                    margin: 0 5px; 
+                    font-size: 16px;
+                    display: inline-block;
+                ">Sign Up</a>
+                <a href="{% url 'login' %}?next={{ request.path }}" style="
+                    background-color: #0066cc; 
+                    color: white; 
+                    text-decoration: none; 
+                    padding: 10px 20px; 
+                    border-radius: 4px; 
+                    margin: 0 5px; 
+                    font-size: 16px;
+                    display: inline-block;
+                ">Login</a>
+            {% endif %}
+        </div>
+    </footer>
+</body>
+</html>
