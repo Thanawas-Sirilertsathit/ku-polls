@@ -1,3 +1,4 @@
+import logging
 from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -7,6 +8,9 @@ from django.utils import timezone
 from django.contrib import messages
 from .models import Choice, Question, Vote
 from django.contrib.auth.decorators import login_required
+from .utils import get_client_ip
+
+logger = logging.getLogger("polls")
 
 
 class IndexView(generic.ListView):
@@ -71,6 +75,7 @@ class ResultsView(generic.DetailView):
 @login_required
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    ip = get_client_ip(request)
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
@@ -92,11 +97,15 @@ def vote(request, question_id):
         # Update the user's vote to the new choice
         user_vote.choice = selected_choice
         user_vote.save()
+        logger.info(
+            f'User {current_user.username} changed their vote to "{selected_choice.choice_text}" from IP {ip}.')
         messages.success(
             request, f"Your vote was changed to '{selected_choice.choice_text}'.")
     except Vote.DoesNotExist:
         # If the user hasn't voted yet, create a new vote
         Vote.objects.create(user=current_user, choice=selected_choice)
+        logger.info(
+            f'User {current_user.username} voted for "{selected_choice.choice_text}" from IP {ip}.')
         messages.success(
             request, f"You voted for '{selected_choice.choice_text}'.")
 

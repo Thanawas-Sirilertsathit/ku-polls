@@ -124,36 +124,32 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'debug.log'),
-            'formatter': 'verbose',
-        },
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'polls.log',
+            'formatter': 'verbose',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': True,
         },
-        'django.request': {
-            'handlers': ['file'],
-            'level': 'ERROR',
+        'polls': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
             'propagate': False,
-        },
-        'myapp': {  # Replace 'myapp' with your actual app name
-            'handlers': ['file', 'console'],
-            'level': 'INFO',
-            'propagate': True,
         },
     },
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
