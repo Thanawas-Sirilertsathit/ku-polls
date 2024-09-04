@@ -101,14 +101,18 @@ def vote(request, question_id):
         user_vote.choice = selected_choice
         user_vote.save()
         logger.info(
-            f'User {current_user.username} changed their vote to "{selected_choice.choice_text}" from IP {ip}.')
+            f'User {current_user.username} changed their vote to "{selected_choice.choice_text}" in "{question}" from IP {ip}.')
+        logger.info(
+            f'Question id : {question.id}, Choice : {selected_choice.id}')
         messages.success(
             request, f"Your vote was changed to '{selected_choice.choice_text}'.")
     except Vote.DoesNotExist:
         # If the user hasn't voted yet, create a new vote
         Vote.objects.create(user=current_user, choice=selected_choice)
         logger.info(
-            f'User {current_user.username} voted for "{selected_choice.choice_text}" from IP {ip}.')
+            f'User {current_user.username} voted for "{selected_choice.choice_text}" in "{question}" from IP {ip}.')
+        logger.info(
+            f'Question id : {question.id}, Choice : {selected_choice.id}')
         messages.success(
             request, f"You voted for '{selected_choice.choice_text}'.")
 
