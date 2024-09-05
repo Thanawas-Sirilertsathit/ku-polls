@@ -38,8 +38,15 @@
             box-sizing: border-box;
         }
 
-        .signup-form button {
-            width: 100%;
+        .button-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+            margin-top: 10px;
+        }
+
+        .signup-form button,
+        .signup-form .button {
+            flex: 1;
             padding: 10px;
             background-color: #0066cc;
             color: white;
@@ -47,9 +54,12 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            text-align: center;
+            text-decoration: none; /* Remove underline from link */
         }
 
-        .signup-form button:hover {
+        .signup-form button:hover,
+        .signup-form .button:hover {
             background-color: #0052a3;
         }
 
@@ -79,7 +89,10 @@
                     {{ field.errors }}
                 </div>
             {% endfor %}
-            <button type="submit">Register</button>
+            <div class="button-container">
+                <button type="submit">Register</button>
+                <a href="{% url 'polls:index' %}" class="button">Home</a>
+            </div>
         </form>
     </div>
 </body>
