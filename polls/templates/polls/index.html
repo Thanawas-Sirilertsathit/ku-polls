@@ -1,9 +1,55 @@
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Polls</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .status-box {
+            display: {% if messages %} block {% else %} none {% endif %};
+        }
+        .message {
+            padding: 10px 15px;
+            margin: 20px auto;
+            border-radius: 4px;
+            max-width: 800px;
+            text-align: center;
+        }
+        .message.success {
+            background-color: #124429;
+            color: #3cf;
+            border: 1px solid #d6e9c6;
+        }
+        .message.error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        .message.warning {
+            background-color: #fcf8e3;
+            color: #8a6d3b;
+            border: 1px solid #faebcc;
+        }
+        .message.info {
+            background-color: #d9edf7;
+            color: #31708f;
+            border: 1px solid #bce8f1;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,21 +60,76 @@
         <h2>Available Polls</h2>
         {% if latest_question_list %}
             <ul class="poll-list">
-            {% for question in latest_question_list %}
-                <li>
-                    {% if question.can_vote %}
-                    <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-                {% else %}
-                <a href="{% url 'polls:results' question.id %}" style="color: red;" class="closed-poll">{{ question.question_text }} (Closed)</a>
-                {% endif %}
-                - <a href="{% url 'polls:results' question.id %}">Results</a>
-                </li>
-            {% endfor %}
+                {% for question in latest_question_list %}
+                    <li>
+                        {% if question.can_vote %}
+                            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                        {% else %}
+                            <a href="{% url 'polls:results' question.id %}" style="color: red;" class="closed-poll">{{ question.question_text }} (Closed)</a>
+                        {% endif %}
+                        - <a href="{% url 'polls:results' question.id %}">Results</a>
+                    </li>
+                {% endfor %}
             </ul>
         {% else %}
             <p>No polls are available.</p>
         {% endif %}
-    </main>
 
+        <div class="status-box">
+            <h2>Status</h2>
+            {% if messages %}
+                <ul style="
+                    list-style-type: none; /* Remove bullet points */
+                    padding: 0; 
+                    margin: 0;
+                ">
+                    {% for message in messages %}
+                        <li class="message {{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </main>
 </body>
+    <footer style="text-align: center; padding: 5px; background-color: #333; color: white;">
+        <div style="display: flex; align-items: center; justify-content: center;">
+            {% if user.is_authenticated %}
+                <span style="margin-right: 20px;">Current user: {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                        background-color: #0066cc; 
+                        color: white; 
+                        padding: 10px 20px; 
+                        border: none; 
+                        border-radius: 4px; 
+                        cursor: pointer; 
+                        font-size: 16px;
+                    ">Log Out</button>
+                </form>
+            {% else %}
+                <a href="{% url 'signup' %}" style="
+                    background-color: #0066cc; 
+                    color: white; 
+                    text-decoration: none; 
+                    padding: 10px 20px; 
+                    border-radius: 4px; 
+                    margin: 0 5px; 
+                    font-size: 16px;
+                    display: inline-block;
+                ">Sign Up</a>
+                <a href="{% url 'login' %}?next={{ request.path }}" style="
+                    background-color: #0066cc; 
+                    color: white; 
+                    text-decoration: none; 
+                    padding: 10px 20px; 
+                    border-radius: 4px; 
+                    margin: 0 5px; 
+                    font-size: 16px;
+                    display: inline-block;
+                ">Login</a>
+            {% endif %}
+        </div>
+    </footer>
+
 </html>
