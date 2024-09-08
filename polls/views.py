@@ -1,7 +1,7 @@
 import logging
 from django.db.models import F
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -33,7 +33,14 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def dispatch(self, request, *args, **kwargs):
-        question = self.get_object()
+        """Handle the dispatch with check if the poll can be voted or not"""
+        try:
+            question = self.get_object()
+        except Http404:
+            logger.error(
+                f"Invalid poll access attempt. Redirecting to index page.")
+            return redirect(reverse('polls:index'))
+
         if not question.can_vote():
             messages.error(request, "Voting is not allowed for this poll.")
             return HttpResponseRedirect(reverse('polls:index'))
