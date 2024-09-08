@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ```
 6. Apply config
 
-Create a file called ``.env.production`` then copy format of ``sample.env`` and put information into ``.env.production``
+Create a file called ``.env.production`` then copy format of ``sample.env`` and put information into ``.env``
 
 7. Run the server
 ```
