@@ -1,4 +1,6 @@
 # KU-Polls : Online survey web application
+=====================================
+[![Run Django Test](https://github.com/Thanawas-Sirilertsathit/ku-polls/actions/workflows/django.yml/badge.svg)](https://github.com/Thanawas-Sirilertsathit/ku-polls/actions/workflows/django.yml)
 ## Description
 The web application for conducting surveys and polls executively for authorized people in Kasetsart University. This project has some parts of [Django tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/). This project mainly aims for event organizer to ask about feedbacks from events that hold in the university.
 
