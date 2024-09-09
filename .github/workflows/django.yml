@@ -25,6 +25,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Create .env file
+      run: |
+        echo "DEBUG=True" >> .env
+        echo "SECRET_KEY=your_secret_key_here" >> .env
+        echo "TIME_ZONE=Asia/Bangkok"
+        echo "ALLOWED_HOSTS=localhost,127.0.0.1,::1"
     - name: Run Tests
       run: |
         python manage.py test tests
