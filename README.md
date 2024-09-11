@@ -3,7 +3,7 @@
 [![Run Django Test](https://github.com/Thanawas-Sirilertsathit/ku-polls/actions/workflows/django.yml/badge.svg)](https://github.com/Thanawas-Sirilertsathit/ku-polls/actions/workflows/django.yml)[![Run flake8](https://github.com/Thanawas-Sirilertsathit/ku-polls/actions/workflows/flake8.yml/badge.svg)](https://github.com/Thanawas-Sirilertsathit/ku-polls/actions/workflows/flake8.yml)
 
 ## Description
-The web application for conducting surveys and polls executively for authorized people in Kasetsart University. This project has some parts of [Django tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/). This project mainly aims for event organizer to ask about feedbacks from events that hold in the university.
+The web application for conducting surveys and polls executively for authorized people in Kasetsart University. This project has some parts of [Django tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/). This project mainly aims for event organizer to ask about feedbacks from events that hold in the university. Visitor can also view the result of the poll but can not vote in the poll.
 
 ## Documents
 * [Project Wiki](../../wiki/Home)
@@ -17,6 +17,7 @@ The web application for conducting surveys and polls executively for authorized 
 * [Iteration 1](../../wiki/Iteration_1)
 * [Iteration 2](../../wiki/Iteration_2)
 * [Iteration 3](../../wiki/Iteration_3)
+* [Iteration_4](../../wiki/Iteration_4)
 
 ## Demo users
 | Username | Password | Role |
@@ -25,45 +26,36 @@ The web application for conducting surveys and polls executively for authorized 
 | demo2 | hackme22 | General user |
 | demo3 | hackme33 | General user |
 
+## Installation
+[Steps to install the program](./Installation.md)
 
-## Run these commands respectively
-1. Clone github repository
-```
-git clone https://github.com/Thanawas-Sirilertsathit/ku-polls.git
-```
-2. Change directory to ku-polls
-```
-cd ku-polls
-```
-3. Create Virtual Environment
-```
-python -m venv env
-```
-4. Activate Virtual Environment
-```
-env\Scripts\activate # For Window
-```
-```
-source env/bin/activate # For MacOS and Linux
-```
-5. Install required modules
-```
-pip install -r requirements.txt
-```
-6. Apply config
+## How to run
 
-Create a file called ``.env.production`` then copy format of ``sample.env`` and put information into ``.env``
+1. Set up environment variables
+```
+echo "DEBUG=False" >> .env
+```
+```
+echo "SECRET_KEY=your_secret_key_here" >> .env
+```
+```
+echo "TIME_ZONE=Asia/Bangkok" >> .env
+```
+```
+echo "ALLOWED_HOSTS=localhost,127.0.0.1,::1" >> .env
+```
 
-7. Run the server
+2. Apply migration and load data
+
 ```
 python manage.py migrate
 ```
 ```
-python manage.py loaddata data/polls-v3.json
+python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
 ```
-```
-python manage.py loaddata data/users.json
-```
+
+3. Run the server
+   
 ```
 python manage.py runserver
 ```
