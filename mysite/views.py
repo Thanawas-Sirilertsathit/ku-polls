@@ -1,17 +1,17 @@
+"""Login and Signup page."""
 import logging
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
-from polls.utils import get_client_ip
 from polls.signals import signup_failed
 
 
 class CustomLoginView(LoginView):
+    """Create custom login page."""
+
     def form_valid(self, form):
-        """Message the system for success login"""
+        """Message the system for success login."""
         messages.success(self.request, "You have successfully logged in.")
         return super().form_valid(form)
 
@@ -20,7 +20,7 @@ logger = logging.getLogger('polls')
 
 
 def signup(request):
-    """Render signup page"""
+    """Render signup page."""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
