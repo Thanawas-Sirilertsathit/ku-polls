@@ -4,41 +4,46 @@
 {% block title %}{{ question.question_text }}{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
-    <style>
-        .user-vote {
-            background-color: #f0ff0f; 
-            font-weight: bold;
-        }
-        .message {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            max-width: 600px;
-            text-align: center;
-            color: #fff;
-            display: inline-block; /* Ensure the container's width is only as wide as its content */
-        }
-        .message.success {
-            background-color: #124429;
-            color: #3cf;
-        }
-        .message.error {
-            background-color: #f2dede;
-            color: #a94442;
-        }
-        .message.warning {
-            background-color: #fcf8e3;
-            color: #8a6d3b;
-        }
-        .message.info {
-            background-color: #d9edf7;
-            color: #31708f;
-        }
-        .messages-container {
-            text-align: center; /* Center the messages container */
-        }
-    </style>
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<style>
+    .user-vote {
+        background-color: #f0ff0f;
+        font-weight: bold;
+    }
+    .message {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        max-width: 600px;
+        text-align: center;
+        color: #fff;
+        display: inline-block;
+    }
+    .message.success {
+        background-color: #124429;
+        color: #3cf;
+    }
+    .message.error {
+        background-color: #f2dede;
+        color: #a94442;
+    }
+    .message.warning {
+        background-color: #fcf8e3;
+        color: #8a6d3b;
+    }
+    .message.info {
+        background-color: #d9edf7;
+        color: #31708f;
+    }
+    .messages-container {
+        text-align: center;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -65,18 +70,38 @@
                 <p>No choices available.</p>
             {% endfor %}
         </fieldset>
-        <button type="submit" style="
-            background-color: #0066cc; 
-            color: white; 
-            padding: 10px 20px; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 16px;
-            display: inline-block;
-            margin: 10px 0;
-        ">Vote</button>
+        <div class="action-buttons">
+            <button type="submit" style="
+                background-color: #0066cc; 
+                color: white; 
+                padding: 10px 20px; 
+                border: none; 
+                border-radius: 4px; 
+                cursor: pointer; 
+                font-size: 16px;
+                display: inline-block;
+            ">Vote</button>
+        </div>
     </form>
+
+    {% if user_vote %}
+    <form action="{% url 'polls:cancel_vote' question.id %}" method="post" class="cancel-vote-form">
+        {% csrf_token %}
+        <div class="action-buttons">
+            <button type="submit" style="
+                background-color: #cc3300; 
+                color: white; 
+                padding: 10px 20px; 
+                border: none; 
+                border-radius: 4px; 
+                cursor: pointer; 
+                font-size: 16px;
+                display: inline-block;
+                margin-left: 10px;
+            ">Cancel Vote</button>
+        </div>
+    </form>
+    {% endif %}
 
     <div class="navigation-links" style="margin-top: 20px; text-align: center;">
         <a href="{% url 'polls:index' %}" style="

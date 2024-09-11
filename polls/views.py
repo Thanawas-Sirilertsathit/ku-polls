@@ -125,3 +125,29 @@ def vote(request, question_id):
 
     # Redirect to the results page
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
+
+@login_required
+def cancel_vote(request, question_id):
+    """Function for cancel vote"""
+    question = get_object_or_404(Question, pk=question_id)
+    current_user = request.user
+    ip = get_client_ip(request)
+    try:
+        # Find and delete the user's vote for the specified question
+        vote = Vote.objects.get(user=request.user, choice__question=question)
+        vote.delete()
+        logger.info(
+            f'User {current_user.username} cancelled vote for in "{question}" from IP {ip}.')
+        logger.info(
+            f'Question id : {question.id}')
+        messages.success(request, "Your vote has been cancelled.")
+    except Vote.DoesNotExist:
+        logger.info(
+            f'User {current_user.username} failed to cancel vote for in "{question}" from IP {ip}.')
+        logger.info(
+            f'Question id : {question.id}')
+        messages.error(request, "You haven't voted in this poll yet.")
+
+    # Redirect to the results page after vote cancellation
+    return redirect('polls:results', pk=question_id)
