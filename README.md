@@ -18,7 +18,14 @@ The web application for conducting surveys and polls executively for authorized 
 * [Iteration 2](../../wiki/Iteration_2)
 * [Iteration 3](../../wiki/Iteration_3)
 
-## Requirements and Installation
+## Demo users
+| Username | Password | Role |
+|----------|----------|------|
+| demo1 | hackme11 | General user |
+| demo2 | hackme22 | General user |
+| demo3 | hackme33 | General user |
+
+
 ## Run these commands respectively
 1. Clone github repository
 ```
