@@ -26,3 +26,32 @@ source env/bin/activate # For MacOS and Linux
 ```
 pip install -r requirements.txt
 ```
+
+6. Set up environment variables
+```
+echo "DEBUG=False" >> .env
+```
+```
+echo "SECRET_KEY=your_secret_key_here" >> .env
+```
+```
+echo "TIME_ZONE=Asia/Bangkok" >> .env
+```
+```
+echo "ALLOWED_HOSTS=localhost,127.0.0.1,::1" >> .env
+```
+
+7. Apply migration and load data
+
+```
+python manage.py migrate
+```
+```
+python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
+```
+
+8. Run the test
+   
+```
+python manage.py test tests
+```
