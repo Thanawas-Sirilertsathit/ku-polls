@@ -28,7 +28,7 @@ jobs:
     - name: Create .env file
       run: |
         echo "DEBUG=True" >> .env
-        echo "SECRET_KEY=your_secret_key_here" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
         echo "TIME_ZONE=Asia/Bangkok" >> .env
         echo "ALLOWED_HOSTS=localhost,127.0.0.1,::1" >> .env
     - name: Run Tests
