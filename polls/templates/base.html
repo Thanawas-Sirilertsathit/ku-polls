@@ -7,15 +7,12 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'polls/style.css' %}">
     {% block extra_css %}
-    <!-- Additional CSS can be added here -->
     {% endblock %}
 </head>
 <body>
     {% block content %}
-    <!-- Main content goes here -->
     {% endblock %}
 
-    <!-- Footer -->
     <footer style="text-align: center; padding: 5px; background-color: #333; color: white;">
         <div style="display: flex; align-items: center; justify-content: center;">
             {% if user.is_authenticated %}
