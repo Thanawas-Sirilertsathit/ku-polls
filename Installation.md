@@ -57,3 +57,9 @@ python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
 ```
 python manage.py test tests
 ```
+
+9. Run collect static
+
+```
+python manage.py collectstatic
+```
