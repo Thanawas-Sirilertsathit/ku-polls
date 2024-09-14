@@ -13,7 +13,7 @@ The web application for conducting surveys and polls executively for authorized 
 | Result page | ![Result_page_picture](/images/result_page.png)
 
 ## Requirements
-Your device must have Python 3.11 or newer version installed and package in [[requirements.txt]].
+Your device must have Python 3.11 or newer version installed and package in [requirements.txt](requirements.txt).
 
 ## Demo users
 | Username | Password | Role |
