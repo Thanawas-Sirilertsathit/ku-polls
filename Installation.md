@@ -28,6 +28,8 @@ pip install -r requirements.txt
 ```
 
 6. Set up environment variables
+
+In this part, you can setup your own configuration.
 ```
 echo "DEBUG=False" >> .env
 ```
