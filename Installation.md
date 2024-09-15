@@ -31,7 +31,7 @@ pip install -r requirements.txt
 
 In this part, you can setup your own configuration.
 ```
-echo "DEBUG=False" >> .env
+echo "DEBUG=True" >> .env
 ```
 ```
 echo "SECRET_KEY=your_secret_key_here" >> .env
@@ -58,8 +58,3 @@ python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
 python manage.py test tests
 ```
 
-9. Run collect static
-
-```
-python manage.py collectstatic
-```
