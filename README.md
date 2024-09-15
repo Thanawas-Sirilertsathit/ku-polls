@@ -21,6 +21,7 @@ Your device must have Python 3.11 or newer version installed and package in [req
 | demo1 | hackme11 | General user |
 | demo2 | hackme22 | General user |
 | demo3 | hackme33 | General user |
+| admin | ********** | Admin |
 
 ## Installation
 [Steps to install the program](./Installation.md)
