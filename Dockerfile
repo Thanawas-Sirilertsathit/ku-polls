@@ -1,6 +1,12 @@
 FROM python:3-alpine
 
 WORKDIR /app/polls
+
+ENV SECRET_KEY=${SECRET_KEY}
+ENV DEBUG=True
+ENV TIMEZONE=UTC
+ENV ALLOWED_HOSTS=${ALLOWED_HOSTS:-127.0.0.1,localhost}
+
 COPY ./requirements.txt .
 
 # Install dependencies in Docker container
