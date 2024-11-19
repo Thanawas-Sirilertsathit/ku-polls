@@ -7,10 +7,12 @@ COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
-# Migrate database
-RUN python ./manage.py migrate
+RUN chmod +x ./entrypoint.sh
 # Load data
-RUN python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
+
+# Run this command in docker terminal
+# python manage.py loaddata data/polls-v4.json data/votes-v4.json data/users.json
+
 EXPOSE 8000
 # Run the server
-CMD [ "python", "./manage.py", "runserver", "0.0.0.0:8000" ]
+CMD [ "./entrypoint.sh" ]
