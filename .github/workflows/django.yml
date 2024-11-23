@@ -15,6 +15,21 @@ jobs:
       matrix:
         python-version: [3.11]
 
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: pollsapp
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: pollsdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U pollsapp"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -31,6 +46,11 @@ jobs:
         echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
         echo "TIME_ZONE=Asia/Bangkok" >> .env
         echo "ALLOWED_HOSTS=localhost,127.0.0.1,::1" >> .env
+        echo "DATABASE_USER=pollsapp" >> .env
+        echo "DATABASE_PASSWORD=password" >> .env
+        echo "DATABASE_NAME=pollsdb" >> .env
+        echo "DATABASE_HOST=localhost" >> .env
+        echo "DATABASE_PORT=5432" >> .env
     - name: Run Tests
       run: |
         python manage.py test tests
